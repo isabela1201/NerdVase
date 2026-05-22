@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "tasks.h"
-#include "HWSensor.h"
-#define LIMITE_REGA 40
+
 
 void readHumidity(void *parameter) {
   
@@ -23,6 +22,8 @@ void displayData(void *parameter) {
     if(xSemaphoreTake(soilSemaphoreDisplay, portMAX_DELAY)) {
       //Função de display
       Serial.println(soilHumidity);
+      lcd.print("Humidity: ");
+      lcd.println(soilHumidity);
     }
   }
   vTaskDelay(100 / portTICK_PERIOD_MS); 

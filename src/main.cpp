@@ -1,10 +1,15 @@
 #include <Arduino.h>
 #include "HWSensor.h"
 #include "tasks.h"
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
 
-#define PIN_SENSOR_SOLO 34
+
+#define PIN_SENSOR_SOLO 15
 #define LIMITE_REGA 40
 #define QUEUE_SIZE 5
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 HWSensor solo(PIN_SENSOR_SOLO, 3200, 1200);
 
@@ -25,6 +30,9 @@ void setup() {
 
   Serial.begin(115200);
 
+  lcd.init();
+  lcd.backlight();
+  lcd.println("LCD Started");
   waterPlantQueue = xQueueCreate(QUEUE_SIZE, sizeof(bool));
 
   soilSemaphoreDisplay = xSemaphoreCreateBinary();
